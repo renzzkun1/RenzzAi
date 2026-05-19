@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const GROQ_API_KEY = "gsk_xxxx_isi_api_key_lu"; // Ganti ini!
+const GROQ_API_KEY = "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"; // Ganti ini!
 
 app.get('/', (req, res) => {
     res.send('<h1>Renz3lb v20 API is Online!</h1>');
