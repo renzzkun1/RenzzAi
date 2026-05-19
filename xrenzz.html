@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renz3lb AI Chat</title>
+    <style>
+        body { background: #121212; color: #fff; font-family: sans-serif; display: flex; justify-content: center; height: 100vh; margin: 0; }
+        #chat-container { width: 90%; max-width: 500px; display: flex; flex-direction: column; padding: 20px; }
+        #chat-box { flex: 1; overflow-y: auto; margin-bottom: 20px; border: 1px solid #333; padding: 10px; border-radius: 10px; }
+        .msg { margin: 10px 0; padding: 10px; border-radius: 8px; }
+        .user { background: #007bff; align-self: flex-end; }
+        .bot { background: #333; }
+        textarea { background: #222; color: white; border: 1px solid #444; padding: 10px; width: 100%; box-sizing: border-box; }
+        button { background: #28a745; color: white; border: none; padding: 10px; cursor: pointer; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <h2>Renz3lb AI</h2>
+    <div id="chat-box"></div>
+    <textarea id="msg" placeholder="Tanya sesuatu..."></textarea>
+    <button onclick="send()">Kirim Pesan</button>
+</div>
+
+<script>
+    async function send() {
+        const input = document.getElementById('msg');
+        const box = document.getElementById('chat-box');
+        if(!input.value) return;
+
+        box.innerHTML += `<div class="msg user">${input.value}</div>`;
+        const prompt = input.value;
+        input.value = '';
+
+        box.innerHTML += `<div class="msg bot" id="loading">Renz3lb sedang mikir...</div>`;
+        
+        try {
+            // GANTI IP_SERVER_LU DENGAN IP ASLI LU
+            const res = await fetch('http://salzkacungera.danzxn-buyer.my.id:2014//chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ apiKey: "renz3lb-secret-key-2026", prompt: prompt })
+            });
+            const data = await res.json();
+            document.getElementById('loading').remove();
+            box.innerHTML += `<div class="msg bot">${data.reply}</div>`;
+        } catch(e) {
+            document.getElementById('loading').remove();
+            box.innerHTML += `<div class="msg bot">Error: Gagal konek ke server.</div>`;
+        }
+    }
+</script>
+</body>
+</html>
